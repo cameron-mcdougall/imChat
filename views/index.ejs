@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootcamp imChat</title>
+    <script src="../../socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+<body>
+    <section id="chat-box">
+
+    </section>
+    <form action="/" method="POST" id="user-input">
+        <input id="user-msg" autocomplete="off" autofocus="on" placeholder="Type your message here..." />
+        <button>Send</button>
+    </form>
+    
+    <script>
+        const socket = io.connect('http://localhost:8080/');
+
+        $('#user-input').submit(function(event){
+            event.preventDefault(); // prevents page reloading
+            socket.emit('chat_message', $('#user-msg').val());
+            $('#user-msg').val('');
+            return false;
+        });
+        
+        // append the chat text message
+        socket.on('chat_message', function(msg){
+            $('#chat-box').append($('<li>').html(msg));
+        });
+            
+        // append text if someone is online
+        socket.on('is_online', function(username) {
+            $('#chat-box').append($('<li>').html(username));
+        });
+            
+        // ask username
+        const username = prompt('Please tell me your name');
+        socket.emit('username', username);
+
+    </script>
+</body>
+</html>
