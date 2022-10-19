@@ -29,7 +29,7 @@
         
         // append the chat text message
         socket.on('chat_message', function(msg){
-            $('#chat-box').append($('<li>').html(msg));
+            $('#chat-box').append($('<div>').html(msg));
         });
             
         // append text if someone is online
@@ -38,7 +38,7 @@
         });
             
         // ask username
-        const username = prompt('Please tell me your name');
+        const username = prompt('Please tell me your name + your AND title');
         socket.emit('username', username);
 
     </script>
