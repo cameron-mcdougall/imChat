@@ -10,6 +10,7 @@ const server = express()
 const io = socketIO(server);
 
 io.on('connection', socket => {
+
     socket.on('username', username => {
         socket.username = username;
         io.emit('is_online', `+ <i><strong>${socket.username}</strong> joned the chat.</i>`);
@@ -22,4 +23,5 @@ io.on('connection', socket => {
     socket.on('chat_message', message => {
         io.emit('chat_message', `<strong>${socket.username}</strong>: ${message}`);
     });
+    
 });

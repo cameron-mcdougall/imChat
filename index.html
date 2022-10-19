@@ -34,7 +34,7 @@
             
         // append text if someone is online
         socket.on('is_online', function(username) {
-            $('#chat-box').append($('<li>').html(username));
+            $('#chat-box').append($('<div>').html(username));
         });
             
         // ask username
